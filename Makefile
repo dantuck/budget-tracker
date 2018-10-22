@@ -12,7 +12,7 @@ docker:
 
 # For documentation and testing purposes.
 run:
-	docker run --rm -p 8080:8080 -e BUDGET_PASSWORD=foo mlesniak/budget-tracker
+	docker run --rm -p 8080:8080 -e BUDGET_PASSWORD=foo dantuck/budget-tracker
 
 clean:
 	rm -f budget-tracker

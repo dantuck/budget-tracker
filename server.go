@@ -3,11 +3,11 @@ package main
 import (
 	"encoding/json"
 	"log"
+	"mime"
 	"net/http"
 	"os"
 	"strconv"
 	"strings"
-	"mime"
 
 	"github.com/gorilla/mux"
 )
@@ -29,14 +29,14 @@ func StartServer(pw string) {
 	r.HandleFunc("/api/transaction", requireAuthentication(postHandler)).
 		Methods("POST")
 	r.PathPrefix("/").HandlerFunc(fileHandler)
-	port := ":8080"
+	port := "8080"
 	log.Println("Starting to listen on port", port)
-	
+
 	// http.ListenAndServe(port, r)
-	err := http.ListenAndServeTLS(":" + port, "server.crt", "server.key", r)
-    if err != nil {
-        log.Fatal("Unable to start listening for connections ", err)
-    }
+	err := http.ListenAndServeTLS(":"+port, "server.crt", "server.key", r)
+	if err != nil {
+		log.Fatal("Unable to start listening for connections ", err)
+	}
 }
 
 func fileHandler(w http.ResponseWriter, r *http.Request) {
@@ -72,7 +72,7 @@ func fileHandler(w http.ResponseWriter, r *http.Request) {
 	nameParts := strings.Split(upath, ".")
 	ext := ""
 	if len(nameParts) > 0 {
-		ext = nameParts[len(nameParts) - 1]
+		ext = nameParts[len(nameParts)-1]
 	}
 	contentType := mime.TypeByExtension("." + ext)
 	if contentType != "" {
